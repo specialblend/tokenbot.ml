@@ -1,6 +1,7 @@
 open Contract;
 open List;
 open Sugar;
+open Tokens;
 
 let init_stats = {curse: 0, luck: 0, wealth: 0};
 
@@ -16,23 +17,22 @@ let modWealth = (fn, stats) => {
   {...stats, wealth: fn(stats.wealth)};
 };
 
-let stackFx = (~qty, stats, fx) => {
+let stackEff = (~qty, stats, eff) => {
   open Int;
-  let f =
-    switch (fx) {
+  let aff =
+    switch (eff) {
     | Curse(amt) => modCurse(add(amt * qty))
     | Luck(amt) => modLuck(add(amt * qty))
     | Wealth(amt) => modWealth(add(amt * qty))
     };
-  f(stats);
+  aff(stats);
 };
 
-let stackItem = (~scanFx, stats, item) => {
+let stackItem = (stats, item) => {
   let {token, qty} = item;
-  let fx = scanFx(token);
-  fx->fold_left(stackFx(~qty), stats);
+  token->fx->fold_left(stackEff(~qty), stats);
 };
 
-let calc = (~scanFx, items) => {
-  items->fold_left(stackItem(~scanFx), init_stats);
+let calc = items => {
+  items->fold_left(stackItem, init_stats);
 };

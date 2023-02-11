@@ -23,15 +23,11 @@ let modQty = (db, profile_id, token, fn) => {
   db->setQty(profile_id, token, fn(qty));
 };
 
-let read = (db, profile_id) => {
+let scan = (db, profile_id) => {
   let key = profile_id->scope;
-  db->hgetall(key) ->> map(((token, q)) => {token, qty: q->int_of_string});
-};
-
-let scan = (~tokens=Tokens.all_tokens, db, profile_id) => {
-  let scanToken = token => {
-    let qty = db->getQty(profile_id, token);
+  let stack = ((token, qty)) => {
+    let qty = int_of_string(qty);
     {token, qty};
   };
-  tokens ->> map(scanToken);
+  db->hgetall(key) ->> map(stack);
 };

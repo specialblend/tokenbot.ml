@@ -2,6 +2,7 @@ open Sugar;
 open List;
 open Inventory;
 open Contract;
+open Clerk;
 
 let db = Redis.connect({host: "localhost", port: 6379});
 
@@ -12,5 +13,7 @@ let printItem = item => {
   let {token, qty} = item;
   print_endline(token ++ ": " ++ qty->Int.to_string);
 };
+
+let collect = Collector.use;
 
 db->scan("player1") ->> map(printItem);

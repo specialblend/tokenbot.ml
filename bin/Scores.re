@@ -1,17 +1,17 @@
 open Contract;
-open Sugar;
 open List;
+open Sugar;
 
 let init_scores = {base: 0, bonus: 0, penalty: 0, total: 0};
 
-let stack = (~points, base, item) => {
+let stack = (~points=Tokens.points, base, item) => {
   let {token, qty} = item;
-  base + points(token) * qty;
+  base + token->points * qty;
 };
 
-let calc = (~points, stats, items) => {
+let calc = (stats, items) => {
   let {wealth, curse, _} = stats;
-  let base = items->fold_left(stack(~points), 0);
+  let base = items->fold_left(stack, 0);
   let bonus = wealth * base / 100;
   let penalty = curse * base / 100;
   let total = base + bonus - penalty;
