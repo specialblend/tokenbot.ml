@@ -21,3 +21,7 @@ let weekday = tm => {
   | _ => Monday
   };
 };
+
+let isFriday = (now, profile) => {
+  Profile.time(now, profile)->weekday === Friday;
+};

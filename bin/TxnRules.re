@@ -16,10 +16,6 @@ let give = (~qty=1, token, about, target: profile) => {
   };
 };
 
-let isFriday = (now, profile) => {
-  Profile.time(now, profile)->weekday === Friday;
-};
-
 let baseToken = txn => {
   txn->recipients->map(give("👍", "thanks"))->append;
 };
