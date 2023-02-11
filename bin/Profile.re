@@ -16,12 +16,16 @@ module DB = {
   let scan = (db, pid) => {
     let key = scope(pid);
     let read = db->hget(key);
-    switch (read("id"), read("name")) {
-    | (Some(id), Some(name)) when id == pid =>
+
+    let id = read("id");
+    let name = read("name");
+
+    switch (id, name) {
+    | (Some(id), Some(name)) =>
       open Option;
-      let tz_offset = read("tz_offset") ->> map(float_of_string);
-      let cake_month = read("cake_month") ->> map(int_of_string);
-      let cake_day = read("cake_day") ->> map(int_of_string);
+      let tz_offset = read("tz_offset") ->> map(float);
+      let cake_month = read("cake_month") ->> map(int);
+      let cake_day = read("cake_day") ->> map(int);
       let profile = {id, name, tz_offset, cake_month, cake_day};
       Some(profile);
     | _ => None
