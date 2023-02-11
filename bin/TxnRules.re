@@ -16,16 +16,16 @@ let give = (~qty=1, token, about, target: profile) => {
   };
 };
 
-let baseToken = txn => {
-  txn->recipients->map(give("👍", "thanks"))->append;
+let baseToken = (txn, res) => {
+  txn->recipients->map(give("👍", "thanks"))->append(res);
 };
 
-let fridayBonus = txn => {
+let fridayBonus = (txn, res) => {
   txn
   ->everyone
   ->filter(isFriday(txn.time))
   ->map(give("🍻", "TGIF"))
-  ->append;
+  ->append(res);
 };
 
 let rules = [baseToken, fridayBonus];
