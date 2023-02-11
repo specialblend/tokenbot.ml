@@ -1,8 +1,9 @@
-open Pipe;
-open List;
-open Inventory;
-open Contract;
 open Clerk;
+open Contract;
+open List;
+open Pipe;
+
+open Inventory.DB;
 
 let db = Redis.connect({host: "localhost", port: 6379});
 
