@@ -19,13 +19,13 @@ let modWealth = (fn, stats) => {
 
 let stackEff = (~qty, stats, eff) => {
   open Int;
-  let aff =
+  let f =
     switch (eff) {
     | Curse(amt) => modCurse(add(amt * qty))
     | Luck(amt) => modLuck(add(amt * qty))
     | Wealth(amt) => modWealth(add(amt * qty))
     };
-  aff(stats);
+  f(stats);
 };
 
 let stackItem = (stats, item) => {
