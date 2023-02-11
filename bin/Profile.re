@@ -8,8 +8,3 @@ let time = (now, profile) => {
   | None => now->localtime
   };
 };
-
-module DB = {
-  open Redis;
-  let scope = prefix("profile");
-};

@@ -30,9 +30,9 @@ let stackFx = (~qty, stats, fx) => {
 let stackItem = (~scanFx, stats, item) => {
   let {token, qty} = item;
   let fx = scanFx(token);
-  fx->fold(stackFx(~qty), stats);
+  fx->fold_left(stackFx(~qty), stats);
 };
 
 let calc = (~scanFx, items) => {
-  items->fold(stackItem(~scanFx), init_stats);
+  items->fold_left(stackItem(~scanFx), init_stats);
 };
