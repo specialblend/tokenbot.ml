@@ -36,8 +36,8 @@ type profile = {
   id: string,
   name: string,
   tz_offset: option(float),
-  // cake_month: option(int),
-  // cake_day: option(int),
+  cake_month: option(int),
+  cake_day: option(int),
 };
 
 type player = {
