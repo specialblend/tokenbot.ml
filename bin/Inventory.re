@@ -8,7 +8,7 @@ let scope = prefix("inventory");
 let getQty = (db, profile_id, token) => {
   let key = profile_id->scope;
   switch (db->hget(key, token)) {
-  | Some(s) => s->int_of_string
+  | Some(qty) => int_of_string(qty)
   | None => 0
   };
 };
