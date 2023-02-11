@@ -1,5 +1,5 @@
 open Contract;
-open Sugar;
+open Pipe;
 
 let time = (now, profile) => {
   switch (profile.tz_offset) {

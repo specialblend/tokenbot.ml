@@ -2,7 +2,7 @@ open Contract;
 open Clock;
 open Txn;
 open List;
-open Sugar;
+open Pipe;
 
 let give = (~qty=1, token, about, target: profile) => {
   {

@@ -1,6 +1,6 @@
 open Contract;
 open List;
-open Sugar;
+open Pipe;
 open Redis;
 
 let scope = prefix("inventory");
