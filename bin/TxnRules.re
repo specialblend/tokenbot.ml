@@ -17,19 +17,19 @@ let give = (~qty=1, token, about, target: profile) => {
 };
 
 let isFriday = (now, profile) => {
-  Profile.time(now, profile) ->> weekday === Friday;
+  Profile.time(now, profile)->weekday === Friday;
 };
 
 let baseToken = txn => {
-  txn ->> recipients ->> map(give("👍", "thanks")) ->> append;
+  txn->recipients->map(give("👍", "thanks"))->append;
 };
 
 let fridayBonus = txn => {
   txn
-  ->> everyone
-  ->> filter(isFriday(txn.time))
-  ->> map(give("🍻", "TGIF"))
-  ->> append;
+  ->everyone
+  ->filter(isFriday(txn.time))
+  ->map(give("🍻", "TGIF"))
+  ->append;
 };
 
 let rules = [baseToken, fridayBonus];

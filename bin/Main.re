@@ -1,31 +1,16 @@
-open Contract;
-open Clerk;
-open List;
 open Sugar;
+open List;
+open Inventory;
+open Contract;
 
-let rules = TxnRules.rules;
-let collect = Collector.use(~rules);
+let db = Redis.connect({host: "localhost", port: 6379});
 
-let player1 = {id: "player1", name: "player1", tz_offset: None};
-let player2 = {id: "player2", name: "player2", tz_offset: None};
-let player3 = {id: "player3", name: "player3", tz_offset: None};
+db->modQty("player1", "👍", Int.add(1));
+db->modQty("player1", "🍕", Int.add(1));
 
-let txn = {
-  id: "test",
-  time: Unix.time(),
-  msg: "test msg",
-  sender: player1,
-  recipients: [player2, player3],
+let printItem = item => {
+  let {token, qty} = item;
+  print_endline(token ++ ": " ++ qty->Int.to_string);
 };
 
-let result = collect(txn);
-
-result
-->> map(mtxn => {
-      print_endline(mtxn.target);
-      print_endline(mtxn.item.token);
-      print_endline(mtxn.item.qty ->> Int.to_string);
-      print_endline(mtxn.about);
-    });
-
-// print_endline(Profile.time(txn.time, player1).tm_wday |> Int.to_string);
+db->scan("player1") ->> map(printItem);

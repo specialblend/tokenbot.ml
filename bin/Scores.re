@@ -10,7 +10,7 @@ let stack = (~points, base, item) => {
 
 let calc = (~points, stats, items) => {
   let {wealth, curse, _} = stats;
-  let base = items ->> fold(stack(~points), 0);
+  let base = items->fold(stack(~points), 0);
   let bonus = wealth * base / 100;
   let penalty = curse * base / 100;
   let total = base + bonus - penalty;
