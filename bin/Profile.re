@@ -1,4 +1,5 @@
 open Contract;
+open Pipe;
 
 let time = (now, profile) => {
   switch (profile.tz_offset) {
@@ -7,7 +8,26 @@ let time = (now, profile) => {
   };
 };
 
-module DB = {};
+module DB = {
+  open Redis;
+
+  let scope = prefix("profile");
+
+  let scan = (db, pid) => {
+    let key = scope(pid);
+    let read = db->hget(key);
+    switch (read("id"), read("name")) {
+    | (Some(id), Some(name)) when id == pid =>
+      open Option;
+      let tz_offset = read("tz_offset") ->> map(float_of_string);
+      let cake_month = read("cake_month") ->> map(int_of_string);
+      let cake_day = read("cake_day") ->> map(int_of_string);
+      let profile = {id, name, tz_offset, cake_month, cake_day};
+      Some(profile);
+    | _ => None
+    };
+  };
+};
 
 module Mock = {
   let gen =
