@@ -13,11 +13,9 @@ module DB = {
 
   let scope = prefix("profile");
 
-  let put = (db, profile) => {
-    open Option;
-    let rejectNone = keep(x => x);
+  let toPairs = profile => {
     let {id, name, tz_offset, cake_month, cake_day} = profile;
-    let key = scope(id);
+    let rejectEmpty = keep(x => x);
     let data = [
       Some(id) ->? pair("id"),
       Some(name) ->? pair("name"),
@@ -25,7 +23,22 @@ module DB = {
       cake_month ->? Int.to_string ->? pair("cake_month"),
       cake_day ->? Int.to_string ->? pair("cake_day"),
     ];
-    db->hmset(key, rejectNone(data));
+    rejectEmpty(data);
+  };
+
+  let put = (db, profile) => {
+    let data = toPairs(profile);
+    let key = scope(profile.id);
+    db->hmset(key, data);
+  };
+
+  let touch = (db, profile: profile) => {
+    let key = scope(profile.id);
+    let read = db->hget(key);
+    switch (read("id")) {
+    | Some(_) => ()
+    | None => db->put(profile)
+    };
   };
 
   let scan = (db, pid) => {

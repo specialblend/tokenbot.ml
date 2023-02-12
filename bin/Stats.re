@@ -17,20 +17,20 @@ let modWealth = (fn, stats) => {
   {...stats, wealth: fn(stats.wealth)};
 };
 
-let stackEff = (~qty, stats, eff) => {
+let stackFx = (~qty, stats, fx) => {
   open Int;
-  let f =
-    switch (eff) {
+  let update =
+    switch (fx) {
     | Curse(amt) => modCurse(add(amt * qty))
     | Luck(amt) => modLuck(add(amt * qty))
     | Wealth(amt) => modWealth(add(amt * qty))
     };
-  f(stats);
+  update(stats);
 };
 
 let stackItem = (stats, item) => {
   let {token, qty} = item;
-  token->fx->fold(stackEff(~qty), stats);
+  token->fx->fold(stackFx(~qty), stats);
 };
 
 let calc = items => {
