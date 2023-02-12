@@ -1,4 +1,4 @@
 (executable
  (name Main)
  (public_name Main)
- (libraries candy unix redis-sync))
+ (libraries candy cuid unix redis-sync))
