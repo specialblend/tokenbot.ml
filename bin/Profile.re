@@ -13,6 +13,21 @@ module DB = {
 
   let scope = prefix("profile");
 
+  let put = (db, profile) => {
+    open Option;
+    let rejectNone = keep(x => x);
+    let {id, name, tz_offset, cake_month, cake_day} = profile;
+    let key = scope(id);
+    let data = [
+      Some(id) ->> map(pair("id")),
+      Some(name) ->> map(pair("name")),
+      tz_offset ->> map(Float.to_string) ->> map(pair("tz_offset")),
+      cake_month ->> map(Int.to_string) ->> map(pair("cake_month")),
+      cake_day ->> map(Int.to_string) ->> map(pair("cake_day")),
+    ];
+    db->hmset(key, rejectNone(data));
+  };
+
   let scan = (db, pid) => {
     let key = scope(pid);
     let read = db->hget(key);
