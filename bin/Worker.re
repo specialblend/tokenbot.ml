@@ -2,7 +2,7 @@ open Candy;
 open Stream;
 open Redis_sync.Client;
 
-let use = (conn, channel) => {
+let watch = (conn, channel) => {
   let events = stream(conn);
   subscribe(conn, [channel]);
 
