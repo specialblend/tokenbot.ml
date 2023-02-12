@@ -8,9 +8,9 @@ let use = (conn, channel) => {
 
   let handleMsg =
     fun
+    | `Bulk(Some("subscribe")) => None
+    | `Bulk(Some("message")) => None
     | `Bulk(Some(msg)) when msg == channel => None
-    | `Bulk(Some(msg)) when msg == "subscribe" => None
-    | `Bulk(Some(msg)) when msg == "message" => None
     | `Bulk(Some(msg)) => Some(msg)
     | _ => None;
 
