@@ -1,6 +1,6 @@
 open Contract;
 open List;
-open Pipe;
+open Candy;
 
 module DB = {
   open Redis;

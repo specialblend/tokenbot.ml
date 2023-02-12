@@ -1,6 +1,6 @@
 open Contract;
 open List;
-open Pipe;
+open Candy;
 open Tokens;
 
 let init_stats = {curse: 0, luck: 0, wealth: 0};

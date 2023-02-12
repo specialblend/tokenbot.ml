@@ -1,5 +1,5 @@
 open List;
-open Pipe;
+open Candy;
 
 module Collector = {
   let use = (~rules, txn) => {

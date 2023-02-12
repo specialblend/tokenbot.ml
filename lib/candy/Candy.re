@@ -1,5 +1,5 @@
-let (|.) = (|>); // (->) pipe first
-let (->>) = (|>); // (->>) pipe last
+let (|.) = (|>); // (->) candy first
+let (->>) = (|>); // (->>) candy last
 
 let ( *? ) = (opt, def) => {
   switch (opt) {
