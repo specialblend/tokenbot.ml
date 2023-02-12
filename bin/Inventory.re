@@ -9,7 +9,7 @@ module DB = {
 
   let getQty = (db, profile_id, token) => {
     let key = scope(profile_id);
-    db->hget(key, token) ->? int_of_string *? 0;
+    (db->hget(key, token) ->? int_of_string) *? 0;
   };
 
   let setQty = (db, profile_id, token, qty) => {
