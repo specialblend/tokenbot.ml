@@ -4,11 +4,14 @@ let sender = txn => txn.sender;
 let recipients = txn => txn.recipients;
 let everyone = txn => [txn.sender, ...txn.recipients];
 
-module Mtx = {
-  let fillId = (~cuid=Cuid.generate, mtx: mtxn) => {
-    switch (mtx.id) {
-    | "" => {...mtx, id: cuid()}
-    | _ => mtx
-    };
+let give = (~cuid=Cuid.generate, ~qty=1, token, about, target: profile) => {
+  {
+    id: cuid(),
+    target: target.id,
+    item: {
+      token,
+      qty,
+    },
+    about,
   };
 };
