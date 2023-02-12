@@ -12,7 +12,7 @@
     "buildEnv": { "ODOC_SYNTAX": "re" }
   },
   "scripts": {
-    "test": "esy x Main",
+    "start": "esy x Main",
     "format": "esy dune build @fmt --auto-promote",
     "doc": "esy dune build @doc"
   },

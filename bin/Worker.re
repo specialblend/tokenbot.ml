@@ -6,7 +6,7 @@ let watch = (conn, channel) => {
   let events = stream(conn);
   subscribe(conn, [channel]);
 
-  let handleMsg =
+  let doMsg =
     fun
     | `Bulk(Some("subscribe")) => None
     | `Bulk(Some("message")) => None
@@ -14,9 +14,5 @@ let watch = (conn, channel) => {
     | `Bulk(Some(msg)) => Some(msg)
     | _ => None;
 
-  let read = () => {
-    events ->> next ->> keep(handleMsg);
-  };
-
-  read;
+  () => events ->> next ->> keep(doMsg);
 };

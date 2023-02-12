@@ -2,7 +2,7 @@ let (|.) = (|>); // (->) pipe first
 let (->>) = (|>); // (->>) pipe last
 
 // unwrap option or return fallback
-let ( *? ) = (opt, def) => {
+let (|?) = (opt, def) => {
   switch (opt) {
   | Some(opt) => opt
   | _ => def
@@ -12,7 +12,7 @@ let ( *? ) = (opt, def) => {
 // map over option
 let (->?) = (opt, fn) => Option.map(fn, opt);
 
-let fold = List.fold_left;
+let fold = (ls, fn, init) => List.fold_left(fn, init, ls);
 
 // map over list, only keep items that are Some(_)
 let keep = (fn, ls) => {
@@ -22,7 +22,7 @@ let keep = (fn, ls) => {
     | _ => res
     };
   };
-  ls ->> fold(stack, []);
+  ls->fold(stack, []);
 };
 
 // make 2 tuple

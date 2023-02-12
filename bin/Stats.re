@@ -1,5 +1,4 @@
 open Contract;
-open List;
 open Candy;
 open Tokens;
 

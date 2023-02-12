@@ -1,5 +1,4 @@
 open Contract;
-open List;
 open Candy;
 
 let init_scores = {base: 0, bonus: 0, penalty: 0, total: 0};
