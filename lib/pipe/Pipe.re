@@ -1,14 +1,14 @@
 let (|.) = (|>); // (->) pipe first
 let (->>) = (|>); // (->>) pipe last
 
-let (+?) = (opt, def) => {
+let ( *? ) = (opt, def) => {
   switch (opt) {
   | Some(opt) => opt
   | _ => def
   };
 };
 
-let ( *? ) = (opt, fn) => Option.map(fn, opt);
+let (->?) = (opt, fn) => Option.map(fn, opt);
 
 let fold = List.fold_left;
 

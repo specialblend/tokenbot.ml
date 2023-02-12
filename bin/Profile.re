@@ -19,11 +19,11 @@ module DB = {
     let {id, name, tz_offset, cake_month, cake_day} = profile;
     let key = scope(id);
     let data = [
-      Some(id) *? pair("id"),
-      Some(name) *? pair("name"),
-      tz_offset *? Float.to_string *? pair("tz_offset"),
-      cake_month *? Int.to_string *? pair("cake_month"),
-      cake_day *? Int.to_string *? pair("cake_day"),
+      Some(id) ->? pair("id"),
+      Some(name) ->? pair("name"),
+      tz_offset ->? Float.to_string ->? pair("tz_offset"),
+      cake_month ->? Int.to_string ->? pair("cake_month"),
+      cake_day ->? Int.to_string ->? pair("cake_day"),
     ];
     db->hmset(key, rejectNone(data));
   };
@@ -38,9 +38,9 @@ module DB = {
     switch (id, name) {
     | (Some(id), Some(name)) =>
       open Option;
-      let tz_offset = read("tz_offset") *? float;
-      let cake_month = read("cake_month") *? int;
-      let cake_day = read("cake_day") *? int;
+      let tz_offset = read("tz_offset") ->? float;
+      let cake_month = read("cake_month") ->? int;
+      let cake_day = read("cake_day") ->? int;
       let profile = {id, name, tz_offset, cake_month, cake_day};
       Some(profile);
     | _ => None
